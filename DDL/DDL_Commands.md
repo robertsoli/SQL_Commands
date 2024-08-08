@@ -53,6 +53,15 @@ ADD tenure NUMERIC(2,2),
     gender VARCHAR(10)
 ;
 ```
+---
+
+#### DROP command in ALTER
+
+```sql
+
+
+
+```
 
 ---
 
