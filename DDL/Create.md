@@ -37,7 +37,8 @@ CREATE TABLE EmployeesBackup
 
 ```sql
 
-DROP TABLE Employees;
+DROP TABLE Employees
+;
 
 ```
 
@@ -59,7 +60,8 @@ ADD tenure NUMERIC(2,2),
 
 ```sql
 
-TRUNCATE TABLE Employees;
+TRUNCATE TABLE Employees
+;
 
 ```
 
@@ -82,5 +84,3 @@ EXEC sp_rename 'Employees.emp_id', 'employee_id'
 ;
 
 ```
-
----
