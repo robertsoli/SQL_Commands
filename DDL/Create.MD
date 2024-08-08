@@ -1,6 +1,7 @@
 -- Creating a table for employees
 
 ```sql
+
 CREATE TABLE Employees (
 	id INT,
 	employee_name VARCHAR(50),
