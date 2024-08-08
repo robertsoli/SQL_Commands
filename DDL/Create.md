@@ -58,7 +58,9 @@ ADD tenure NUMERIC(2,2),
 #### Trunacting a table
 
 ```sql
+
 TRUNCATE TABLE Employees;
+
 ```
 
 ---
@@ -66,25 +68,19 @@ TRUNCATE TABLE Employees;
 #### Renaming a table
 
 ```sql
+
 EXEC sp_rename 'Employees', 'Employees_Table'
 ;
+
 ```
 
 #### Renaming a column
 
 ```sql
+
 EXEC sp_rename 'Employees.emp_id', 'employee_id'
 ;
-```
-
----
-
-COMMENT
-
-```sql
-
 
 ```
 
 ---
-
