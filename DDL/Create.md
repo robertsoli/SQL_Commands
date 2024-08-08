@@ -12,7 +12,8 @@ CREATE TABLE Employees (
 	date_start DATE NOT NULL,
 	salary NUMERIC(10,2) NOT NULL,
 	department VARCHAR(20) NOT NULL
-	);
+	)
+;
 
 ```
 
@@ -25,13 +26,60 @@ CREATE TABLE Employees (
 CREATE TABLE EmployeesBackup 
     AS 
     SELECT * 
-    FROM Employees;
+    FROM Employees
+;
 
 ```
 
 ---
 
-DROP
+#### Dropping a table
+
+```sql
+
+DROP TABLE Employees;
+
+```
+
+---
+
+#### Altering a table
+
+```sql
+ALTER TABLE Employees
+ADD tenure NUMERIC(2,2),
+    work_accident BIT,
+    gender VARCHAR(10)
+;
+```
+
+---
+
+#### Trunacting a table
+
+```sql
+TRUNCATE TABLE Employees;
+```
+
+---
+
+#### Renaming a table
+
+```sql
+EXEC sp_rename 'Employees', 'Employees_Table'
+;
+```
+
+#### Renaming a column
+
+```sql
+EXEC sp_rename 'Employees.emp_id', 'employee_id'
+;
+```
+
+---
+
+COMMENT
 
 ```sql
 
@@ -39,34 +87,4 @@ DROP
 ```
 
 ---
-
-UPDATE 
-
-```sql
-
-
-```
-
----
-
-ALTER TABLE
-
-```sql
-
-
-```
-
----
-
-TRUNCATE
-
-```sql
-
-
-```
-
----
-
-
-
 
