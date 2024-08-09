@@ -59,7 +59,9 @@ ADD tenure NUMERIC(2,2),
 
 ```sql
 
-
+ALTER TABLE Employees
+DROP COLUMN to_drop
+;
 
 ```
 
