@@ -1,4 +1,4 @@
-Inserting data into the Employees Table
+INSERT for entering data into the Employees Table
 
 ```sql
 
@@ -15,10 +15,50 @@ VALUES
 
 ```
 
-INSERT
+---
 
-UPDATE
+UPDATE for adding a column based off another column
 
-DELETE
+```sql
 
-SELECT
+UPDATE Employees
+SET projected_salary_2025 = salary * 1.1
+
+```
+
+---
+
+DELETE to remove a single row of data
+
+```sql
+
+DELETE FROM Employees
+WHERE employee_id = 150
+
+```
+
+---
+
+DELETE to remove all data in the table while keeping its structure and attributes
+
+```sql
+
+DELETE FROM Employees;
+
+```
+
+---
+
+DROP TABLE to remove the entire table, including its structure and attributes
+
+```sql
+
+DROP TABLE Employees;
+
+```
+
+---
+
+SELECT 
+
+
