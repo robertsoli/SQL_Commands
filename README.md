@@ -1,14 +1,15 @@
 # SQL_Commands
 
-#### A collection of SQL queries housed in DDL, DML, DCL and TCL folders.
+#### A collection of SQL queries housed in DDL and DML folders
 
 ---
 
-This repo is to showcase various SQL commands with the intention of showing potential employers my abilities.
+This repo is to showcase various SQL commands for reference when applying for jobs.
 
-Queries were executed on multiple datasets, including but not limited to: 
+Tools used :
 
-- Insert dataset names here
+MS SQL Server 20
+T-SQL
 
 ---
 
