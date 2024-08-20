@@ -70,7 +70,7 @@ supplier_sales AS (
 )
 SELECT ss.supplier, 
        ss.total_sales, 
-       CAST((ss.total_sales / t.overall_total) * 100 AS numeric(10,2)) AS SalesContributionPercentage
+       CAST((ss.total_sales / t.overall_total) * 100 AS numeric(10,2)) AS sales_contribution_percentage
 FROM supplier_sales ss
 JOIN total_sales t ON 1 = 1;
 
