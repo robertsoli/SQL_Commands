@@ -54,4 +54,25 @@ JOIN sales_summary ss ON s.item_key = ss.item_key;
 
 ```
 
+Suppose we wanted to find out what percentage of total sales each supplier contributed, we could use the following CTE :
+
+```sql
+
+WITH total_sales AS (
+    SELECT SUM(total_price) AS overall_total
+    FROM fact_table
+),
+supplier_sales AS (
+    SELECT i.supplier, SUM(f.total_price) AS total_sales
+    FROM item_dim i
+    JOIN fact_table f ON i.item_key = f.item_key
+    GROUP BY i.supplier
+)
+SELECT ss.supplier, 
+       ss.total_sales, 
+       CAST((ss.total_sales / t.overall_total) * 100 AS numeric(10,2)) AS SalesContributionPercentage
+FROM supplier_sales ss
+JOIN total_sales t ON 1 = 1;
+
+```
 
