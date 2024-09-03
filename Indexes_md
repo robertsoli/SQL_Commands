@@ -1,1 +1,9 @@
+#### Index 
 
+```sql
+
+CREATE INDEX IX_tbl
+
+
+
+```
