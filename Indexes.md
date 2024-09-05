@@ -33,8 +33,23 @@ ON dbo.df_Orders (order_id ASC)
 
 ```
 
+##### We'll create a Clustered Index for the Payments table on order_id
 
+```sql
 
+CREATE CLUSTERED INDEX IX_tblPayments_order_id
+ON dbo.df_Payments (order_id ASC)
+
+```
+
+##### We'll create a Clustered Index for the Products table on product_id
+
+```sql
+
+CREATE CLUSTERED INDEX IX_tblProducts_product_id
+ON dbo.df_Products (product_id ASC)
+
+```
 
 ---
 
