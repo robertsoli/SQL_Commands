@@ -1,14 +1,16 @@
 #### The indexes below are created for improving query performance on all tables in a database named Ecommerce Supply Chain
 
 #### Clustered Indexes will be created for each table to sort and store the data rows in the table based on their key values.
+- Add criteria for what constitutes a good selection of a clustered index
+
 #### Non-Clustered Indexes will be created for each table to improve query performance on frequently queried columns.
+- Add criteria for what constitutes a good selection of a non clustered index
 
 ---
 
 ##### We'll create a Clustered Index for the Customers table on customer_id
 
 ```sql
-
 
 CREATE CLUSTERED INDEX IX_tblCustomers_customer_id
 ON dbo.df_Customers (customer_id ASC)
@@ -53,7 +55,17 @@ ON dbo.df_Products (product_id ASC)
 
 ---
 
-##### Non Clustered index for use in linking orders to payments for the finance department 
+*Include details as to why non clustered indexes are useful before the below*
+
+
+##### Non Clustered index for the customer_city column
 
 ```sql
+
+CREATE NONCLUSTERED INDEX IX_tblCustomers_customer_city
+ON dbo.df_Customers (customer_city ASC)
+
+```
+
+
 
