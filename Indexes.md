@@ -9,6 +9,7 @@
 
 ```sql
 
+
 CREATE CLUSTERED INDEX IX_tblCustomers_customer_id
 ON dbo.df_Customers (customer_id ASC)
 
