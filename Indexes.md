@@ -1,14 +1,17 @@
-#### The indexes below are created for improving query performance on all tables in a database named Ecommerce Supply Chain
+## Indexes
 
-#### Clustered Indexes will be created for each table to sort and store the data rows in the table based on their key values.
-- Add criteria for what constitutes a good selection of a clustered index
-
-#### Non-Clustered Indexes will be created for each table to improve query performance on frequently queried columns.
-- Add criteria for what constitutes a good selection of a non clustered index
+#### The indexes below are created for improving query performance on all tables in a database named Ecommerce Supply Chain.
+#### Selection criteria are based on the index being a unique identifier, and ideally ever increasing. 
 
 ---
 
-##### We'll create a Clustered Index for the Customers table on customer_id
+**Clustered Indexes** will be created for each table to sort and store the data rows in the table based on their key values.
+
+Definition of a clustered index:
+
+- A clustered index sorts and stores the data rows of the table or view in order based on the clustered index key. The clustered index is implemented as a B-tree index structure that supports fast retrieval of the rows, based on their clustered index key values.
+
+##### A Clustered Index for the Customers table on customer_id
 
 ```sql
 
@@ -17,7 +20,7 @@ ON dbo.df_Customers (customer_id ASC)
 
 ```
 
-##### We'll create a Clustered Index for the OrderItems table on order_id
+##### A Clustered Index for the OrderItems table on order_id
 
 ```sql
 
@@ -26,7 +29,7 @@ ON dbo.df_OrderItems (order_id ASC)
 
 ```
 
-##### We'll create a Clustered Index for the Orders table on order_id
+##### A create a Clustered Index for the Orders table on order_id
 
 ```sql
 
@@ -35,7 +38,7 @@ ON dbo.df_Orders (order_id ASC)
 
 ```
 
-##### We'll create a Clustered Index for the Payments table on order_id
+##### A Clustered Index for the Payments table on order_id
 
 ```sql
 
@@ -44,7 +47,7 @@ ON dbo.df_Payments (order_id ASC)
 
 ```
 
-##### We'll create a Clustered Index for the Products table on product_id
+##### A Clustered Index for the Products table on product_id
 
 ```sql
 
@@ -55,10 +58,13 @@ ON dbo.df_Products (product_id ASC)
 
 ---
 
-*Include details as to why non clustered indexes are useful before the below*
+**Non-clustered Indexes** will be created for each table to improve query performance on frequently queried columns.
 
+Definition of a non-clustered index 
 
-##### Non Clustered index for the customer_city column
+- A non-clustered index can be defined on a table or view with a clustered index or on a heap. Each index row in the non-clustered index contains the non-clustered key value and a row locator. This locator points to the data row in the clustered index or heap having the key value. The rows in the index are stored in the order of the index key values, but the data rows are not guaranteed to be in any particular order unless a clustered index is created on the table.
+
+##### A non-clustered index for the Customers table on the customer_city column
 
 ```sql
 
@@ -66,6 +72,18 @@ CREATE NONCLUSTERED INDEX IX_tblCustomers_customer_city
 ON dbo.df_Customers (customer_city ASC)
 
 ```
+
+#### A non-clustered index for the OrderItems table on the price column
+
+```sql
+
+CREATE NONCLUSTERED INDEX IX_tblOrderItems_price
+ON dbo.df_OrderItems (price ASC)
+
+```
+
+
+
 
 
 
