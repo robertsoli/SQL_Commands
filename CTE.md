@@ -1,3 +1,11 @@
+## Common Table Expression (CTE)
+
+#### Definition of a CTE :
+
+A Common Table Expression, also called as CTE in short form, is a temporary named result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE statement. The CTE can also be used in a View.
+
+---
+
 #### Common Table Expression examples
 
 Below is a CTE for printing orders that are higher than the average :
