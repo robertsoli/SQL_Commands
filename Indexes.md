@@ -82,8 +82,41 @@ ON dbo.df_OrderItems (price ASC)
 
 ```
 
+#### A non-clustered index for the OrderItems table on the shipping_charges column
+
+```sql
+
+CREATE NONCLUSTERED INDEX IX_tblOrderItems_shipping_charges
+ON dbo.df_OrderItems (shipping_charges ASC)
+
+```
+
+#### A non-clustered index for the Orders table on the order_purchase_timestamp column
+
+```sql
+
+CREATE NONCLUSTERED INDEX IX_tblOrders_order_purchase_timestamp
+ON dbo.df_Orders (order_purchase_timestamp ASC)
+
+```
+
+#### A non-clustered index for the Payments table on the payment_value column
+
+```
+
+CREATE NONCLUSTERED INDEX IX_tblPayments_payment_value
+ON dbo.df_Payments (payment_value ASC)
+
+```
 
 
+#### A non-clustered index for the Products table on the product_weight_g column
 
+```sql
+
+CREATE NONCLUSTERED INDEX IX_tblProducts_product_weight_g
+ON dbo.df_Products (product_weight_g ASC)
+
+```
 
 
