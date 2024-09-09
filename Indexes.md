@@ -103,7 +103,7 @@ ON dbo.df_Orders (order_purchase_timestamp ASC)
 
 #### A non-clustered index for the Payments table on the payment_value column
 
-```
+```sql
 
 CREATE NONCLUSTERED INDEX IX_tblPayments_payment_value
 ON dbo.df_Payments (payment_value ASC)
@@ -120,4 +120,4 @@ ON dbo.df_Products (product_weight_g ASC)
 
 ```
 
-
+---
