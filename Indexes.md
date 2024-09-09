@@ -1,7 +1,8 @@
 ## Indexes
 
 #### The indexes below are created for improving query performance on all tables in a database named Ecommerce Supply Chain.
-#### Selection criteria are based on the index being a unique identifier, and ideally ever increasing. 
+#### Selection criteria for clustered indexes are based on the index being a unique identifier, and ideally ever increasing. 
+#### Selection criteria for non-clustered indexes are to improve the performance of frequently used queries not covered by the clustered index.
 
 ---
 
