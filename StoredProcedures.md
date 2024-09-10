@@ -103,4 +103,30 @@ EXEC dbo.sp_sales_by_customer @name = 'sumit'
 
 ```
 
+#### Say we wanted to validate data integrity before inserting a new customer into a table, we could use the following stored procedure:
+
+```sql
+
+CREATE PROCEDURE sp_insert_customer 
+    @nid VARCHAR(50),
+    @name VARCHAR(50),
+    @contact_no VARCHAR(15)
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM dbo.customer_dim WHERE nid = @nid) -- Used in EXISTS to check for the presence of rows
+    BEGIN
+    RAISERROR('Customer with this ID already exists.', 16, 1); -- Defines the severity of the error
+    RETURN; -- Halts execution if the record already exists
+    END
+    
+    INSERT INTO dbo.customer_dim (nid, name, contact_no)
+    VALUES (@nid, @name, @contact_no);
+END
+GO
+
+-- Executing the stored procedure to ensure it is working by inserting a record that already exists
+
+EXEC sp_insert_customer @nid = '7505075708899', @name = 'sumit', @contact_no = '8801920345851'
+
+```
 
