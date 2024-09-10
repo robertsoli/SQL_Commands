@@ -75,3 +75,32 @@ EXEC dbo.sp_tblsupermarket_sales_todays_sales @transaction_date = '2019-01-27'
 ;
 
 ```
+
+#### Say we wanted to view customer contact details, sales value and sales volume efficiently, we could create the following stored procedure:
+
+```sql
+
+-- Creating the stored procedure with a parameter
+
+CREATE PROCEDURE sp_sales_by_customer 
+    @name VARCHAR(50)
+AS
+BEGIN
+    SELECT c.name,
+           c.contact_no,
+           s.quantity,
+           s.total_price
+    FROM dbo.customer_dim AS c
+    JOIN dbo.fact_table AS s
+    ON c.customer_key = s.customer_key
+    WHERE c.name = @name;
+END
+GO
+
+-- Executing the procedure with an input
+
+EXEC sp_sales_by_customer 'sumit'
+
+```
+
+
