@@ -50,7 +50,7 @@ WHERE invoice_id = @invoice_id
 
 -- Executing the procedure with an input
 
-EXEC dbo.invoice_details @invoice_id = '750-67-8428'
+EXEC dbo.sp_invoice_details @invoice_id = '750-67-8428'
 ;
 
 ```
@@ -99,7 +99,7 @@ GO
 
 -- Executing the procedure with an input
 
-EXEC sp_sales_by_customer 'sumit'
+EXEC dbo.sp_sales_by_customer @name = 'sumit'
 
 ```
 
