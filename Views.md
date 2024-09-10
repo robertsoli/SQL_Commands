@@ -14,6 +14,14 @@ Besides user-defined views, SQL Server also provides the following view types :
 
 ---
 
+### Data Sources
+
+#### We will be using various data sources for the examples below, they are listed here
+
+- pubs dataset : 11 tables relating to authors, titles, stores, employees, publishers and sales
+
+---
+
 ### Examples of user-defined views
 
 #### To focus, simplify, and customize the perception each user has of the database.
@@ -22,7 +30,7 @@ Besides user-defined views, SQL Server also provides the following view types :
 
 - Create department specific views, some ideas may include omitting confidential information, also show row level security and column level security
 
-#### Say we wanted to view authors, the titles they have published and the sales to date, we could create the following view:
+#### Say we wanted to view authors, the titles they have published and their sales to date, we could create the following view:
 
 ```sql
 
@@ -31,11 +39,11 @@ AS
 
 SELECT
      a.au_fname,
-	   a.au_lname,
-	   t.title,
-	   t.price,
-	   t.ytd_sales,
-	   ta.title_id
+     a.au_lname,
+     t.title,
+     t.price,
+     t.ytd_sales,
+     ta.title_id
 FROM dbo.authors AS a
 INNER JOIN dbo.titleauthor AS ta
 ON ta.au_id = a.au_id
@@ -45,3 +53,4 @@ ON ta.title_id = t.title_id
 
 ```
 
+#### 
