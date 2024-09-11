@@ -30,6 +30,12 @@
 
 #### Example of a Scalar Subquery
 
+```sql
+
+
+
+```
+
 #### Say we wanted to determine the top 10 orders in terms of order value, that are above the average order value
 
 ```sql
