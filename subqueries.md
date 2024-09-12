@@ -10,9 +10,9 @@
 
 #### Types of subqueries : 
 
-**Scalar Subquery** : Returns a single value
+**Scalar Subquery** : Returns a single value -- One done
 
-**Column Subquery** : Returns a single column of values
+**Column Subquery** : Returns a single column of values -- One done
 
 **Multiple column subqueries** : Returns one or more columns.
 
@@ -28,24 +28,43 @@
 
 ---
 
-#### Example of a Scalar Subquery
+#### Example of a Scalar Subquery to determine the percentage of patients who have cancer in a given medical dataset
 
 ```sql
 
-
+SELECT 
+    CAST(
+        (SELECT COUNT(Medical_Condition) FROM dbo.healthcare_dataset WHERE Medical_Condition = 'Cancer') AS DECIMAL(10, 2)
+    ) / 
+    CAST(
+        (SELECT COUNT(DISTINCT Name) FROM dbo.healthcare_dataset) AS DECIMAL(10, 2)
+    ) * 100 AS cancer_percentage
+;
 
 ```
 
-#### Say we wanted to determine the top 10 orders in terms of order value, that are above the average order value
+#### Example of a Column Subquery to print a list of the top 10 invoices whose total order amount is greater than the average
 
 ```sql
 
-SELECT TOP 10 
-	   order_id,
-	   payment_value
-FROM dbo.df_Payments
-WHERE payment_value > (SELECT AVG(payment_value) FROM dbo.df_Payments)
-ORDER BY payment_value DESC
+SELECT TOP 10 invoice_id
+FROM dbo.supermarket_sales
+WHERE order_value > 
+	(SELECT AVG(order_value) 
+         FROM dbo.supermarket_sales)
+ORDER BY order_value DESC
+;
+
+```
+
+
+
+#### Example of a multiple column subquery to 
+
+
+```sql
+
+
 
 ```
 
