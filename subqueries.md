@@ -16,9 +16,9 @@
 
 **Multiple column subqueries** : Returns one or more columns. - One done
 
-**Single row subquery** : Returns a single row of values. - 
+**Single row subquery** : Returns a single row of values. - One done
 
-**Multiple row subquery** : Returns one or more rows.
+**Multiple row subquery** : Returns one or more rows. - 
 
 **Table Subquery** : Returns a result set that can be treated as a table
 
@@ -106,3 +106,46 @@ WHERE
 ;
 
 ```
+
+#### Example of a multiple row subquery to determine the high value customers(customers whose transaction values are in the top 25% in terms of transaction amount)
+#### and the amount of high value transactions they have made
+
+```sql
+
+WITH TransactionQuartiles AS (
+    SELECT 
+           transaction_id,
+           customer_id,
+	   first_name,
+           amount,
+           NTILE(4) OVER (ORDER BY amount DESC) AS quartile
+    FROM dbo.ANZ
+),
+HighValueTransactions AS (
+    SELECT 
+           transaction_id,
+           customer_id,
+           first_name,
+           amount
+    FROM   TransactionQuartiles
+    WHERE  quartile = 4
+),
+CustomerHighValueCounts AS (
+    SELECT 
+           customer_id,
+           first_name,
+           COUNT(transaction_id) AS high_value_transaction_count
+    FROM HighValueTransactions
+    GROUP BY customer_id, first_name
+)
+SELECT 
+       customer_id,
+       first_name,
+       high_value_transaction_count
+FROM CustomerHighValueCounts
+ORDER BY high_value_transaction_count DESC
+;
+
+```
+
+
