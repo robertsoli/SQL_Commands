@@ -59,12 +59,32 @@ ORDER BY order_value DESC
 
 
 
-#### Example of a multiple column subquery to 
+#### Example of a multiple column subquery to determine the transaction volume and average, grouped by month and gender
 
 
 ```sql
 
-
+SELECT month_of_transaction,
+	   gender,
+	   total_transaction_value,
+	   customer_count,
+	   avg_transaction_value
+ FROM 
+ (
+	SELECT 
+		MONTH(date) AS month_of_transaction,
+		gender,
+		SUM(amount) AS total_transaction_value,
+		COUNT(transaction_id) AS customer_count,
+		AVG(amount) AS avg_transaction_value
+	FROM dbo.ANZ
+	GROUP BY 
+		MONTH(date), 
+		gender
+ ) AS           subquery
+ ORDER BY 
+   		month_of_transaction ASC
+;
 
 ```
 
