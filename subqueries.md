@@ -1,4 +1,4 @@
-## Subquery
+## Subqueries
 
 ---
 
@@ -18,9 +18,9 @@
 
 **Single row subquery** : Returns a single row of values. - One done
 
-**Multiple row subquery** : Returns one or more rows. - 
+**Multiple row subquery** : Returns one or more rows. - One done
 
-**Table Subquery** : Returns a result set that can be treated as a table
+**Derived Table Subquery** : Returns a result set that can be treated as a table
 
 **Correlated subqueries** : Reference one or more columns in the outer SQL statement. The subquery is known as a correlated subquery because the subquery is related to the outer SQL statement.
 
@@ -34,10 +34,13 @@
 
 SELECT 
     CAST(
-        (SELECT COUNT(Medical_Condition) FROM dbo.healthcare_dataset WHERE Medical_Condition = 'Cancer') AS DECIMAL(10, 2)
+        (SELECT COUNT(Medical_Condition)
+	 FROM dbo.healthcare_dataset
+	 WHERE Medical_Condition = 'Cancer') AS DECIMAL(10, 2)
     ) / 
     CAST(
-        (SELECT COUNT(DISTINCT Name) FROM dbo.healthcare_dataset) AS DECIMAL(10, 2)
+        (SELECT COUNT(DISTINCT Name)
+	 FROM dbo.healthcare_dataset) AS DECIMAL(10, 2)
     ) * 100 AS cancer_percentage
 ;
 
@@ -57,10 +60,7 @@ ORDER BY order_value DESC
 
 ```
 
-
-
 #### Example of a multiple column subquery to determine the transaction volume and average, grouped by month and gender
-
 
 ```sql
 
@@ -147,5 +147,6 @@ ORDER BY high_value_transaction_count DESC
 ;
 
 ```
+
 
 
