@@ -14,9 +14,9 @@
 
 **Column Subquery** : Returns a single column of values -- One done
 
-**Multiple column subqueries** : Returns one or more columns.
+**Multiple column subqueries** : Returns one or more columns. - One done
 
-**Single row subquery** : Returns a single row of values.
+**Single row subquery** : Returns a single row of values. - 
 
 **Multiple row subquery** : Returns one or more rows.
 
@@ -88,4 +88,21 @@ SELECT month_of_transaction,
 
 ```
 
-#### Say 
+#### Example of a single row subquery to determine the customer who has the highest available balance
+
+```sql
+
+SELECT     customer_id,
+	   first_name,
+	   gender,
+	   age,
+	   balance
+FROM   
+	   dbo.ANZ
+WHERE 
+	   balance = (
+	SELECT MAX(balance)
+	FROM dbo.ANZ)
+;
+
+```
