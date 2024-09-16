@@ -20,9 +20,9 @@
 
 **Multiple row subquery** : Returns one or more rows. - One done
 
-**Derived Table Subquery** : Returns a result set that can be treated as a table
+**Derived Table Subquery** : Returns a result set that can be treated as a table - Two done
 
-**Correlated subqueries** : Reference one or more columns in the outer SQL statement. The subquery is known as a correlated subquery because the subquery is related to the outer SQL statement.
+**Correlated subqueries** : Reference one or more columns in the outer SQL statement. The subquery is known as a correlated subquery because the subquery is related to the outer SQL statement. - 
 
 **Nested subqueries** : Subqueries that are placed within another subquery.
 
@@ -119,7 +119,8 @@ WITH TransactionQuartiles AS (
 	   first_name,
            amount,
            NTILE(4) OVER (ORDER BY amount DESC) AS quartile
-    FROM dbo.ANZ
+    FROM
+	dbo.ANZ
 ),
 HighValueTransactions AS (
     SELECT 
@@ -127,7 +128,8 @@ HighValueTransactions AS (
            customer_id,
            first_name,
            amount
-    FROM   TransactionQuartiles
+    FROM
+	TransactionQuartiles
     WHERE  quartile = 4
 ),
 CustomerHighValueCounts AS (
@@ -135,14 +137,16 @@ CustomerHighValueCounts AS (
            customer_id,
            first_name,
            COUNT(transaction_id) AS high_value_transaction_count
-    FROM HighValueTransactions
+    FROM
+	HighValueTransactions
     GROUP BY customer_id, first_name
 )
 SELECT 
        customer_id,
        first_name,
        high_value_transaction_count
-FROM CustomerHighValueCounts
+FROM
+	CustomerHighValueCounts
 ORDER BY high_value_transaction_count DESC
 ;
 
@@ -165,7 +169,8 @@ FROM (
                    WHEN Defect_rates BETWEEN 1.51 AND 3.0 THEN 'medium'
 		   ELSE 'high'
 		END AS Defect_rate_bins
-	FROM dbo.supply_chain_data
+	FROM
+		dbo.supply_chain_data
 ) AS BinnedProducts
 GROUP BY Defect_rate_bins
 ORDER BY product_count DESC
@@ -193,9 +198,60 @@ FROM (
             WHEN Lead_time BETWEEN 21 AND 28 THEN '4 Weeks'
             WHEN Lead_time > 28 THEN '4 Weeks Plus'
         END AS lead_time_grouped
-    FROM dbo.supply_chain_data
+    FROM
+	dbo.supply_chain_data
 ) AS sales_by_lead_time
 GROUP BY 
     lead_time_grouped;
+
+```
+
+### Examples of correlated subqueries
+
+#### Say we wanted to determine which products had a higher defect rate than the manufacturers average defect rate, to determine problem products, we could use the following correlated subquery:
+
+```sql
+
+SELECT 
+    SKU,
+    Supplier_name,
+    Defect_rates
+FROM 
+    dbo.supply_chain_data AS p1
+WHERE 
+    Defect_rates > (
+        SELECT 
+            AVG(Defect_rates)
+        FROM 
+            dbo.supply_chain_data AS p2
+        WHERE 
+            p1.Supplier_name = p2.Supplier_name
+    )
+ORDER BY 
+    Supplier_name ASC;
+
+```
+
+#### Say we wanted to find the products and carrier with shipping costs higher than the average shipping cost for their shipping carrier, we could use a correlated subquery:
+
+```sql
+
+SELECT 
+    SKU,
+    Shipping_carriers,
+    Shipping_costs
+FROM 
+    dbo.supply_chain_data AS s1
+WHERE 
+    Shipping_costs > (
+        SELECT 
+            AVG(Shipping_costs)
+        FROM 
+            dbo.supply_chain_data AS s2
+        WHERE 
+            s1.Shipping_carriers = s2.Shipping_carriers
+    )
+ORDER BY 
+    Shipping_carriers ASC;
 
 ```
