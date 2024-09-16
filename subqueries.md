@@ -10,25 +10,25 @@
 
 #### Types of subqueries : 
 
-**Scalar Subquery** : Returns a single value -- One done
+**Scalar Subquery** : Returns a single value
 
-**Column Subquery** : Returns a single column of values -- One done
+**Column Subquery** : Returns a single column of values
 
-**Multiple column subqueries** : Returns one or more columns. - One done
+**Multiple column subqueries** : Returns one or more columns
 
-**Single row subquery** : Returns a single row of values. - One done
+**Single row subquery** : Returns a single row of values
 
-**Multiple row subquery** : Returns one or more rows. - One done
+**Multiple row subquery** : Returns one or more rows
 
-**Derived Table Subquery** : Returns a result set that can be treated as a table - Two done
+**Derived Table Subquery** : Returns a result set that can be treated as a table
 
-**Correlated subqueries** : Reference one or more columns in the outer SQL statement. The subquery is known as a correlated subquery because the subquery is related to the outer SQL statement. - Two done
+**Correlated subqueries** : Reference one or more columns in the outer SQL statement. The subquery is known as a correlated subquery because the subquery is related to the outer SQL statement
 
-**Nested subqueries** : Subqueries that are placed within another subquery. - 
+**Nested subqueries** : Subqueries that are placed within another subquery
 
 ---
 
-#### Example of a Scalar Subquery to determine the percentage of patients who have cancer in a given medical dataset
+Example of a **Scalar Subquery** to determine the percentage of patients who have cancer in a given medical dataset
 
 ```sql
 
@@ -46,25 +46,31 @@ SELECT
 
 ```
 
-#### Example of a Column Subquery to print a list of the top 10 invoices whose total order amount is greater than the average
+Example of a **Column Subquery** to print a list of the top 10 invoices whose total order amount is greater than the average
 
 ```sql
 
-SELECT TOP 10 invoice_id
-FROM dbo.supermarket_sales
-WHERE order_value > 
-	(SELECT AVG(order_value) 
-         FROM dbo.supermarket_sales)
+SELECT TOP 10
+	invoice_id
+FROM
+	dbo.supermarket_sales
+WHERE
+	order_value > 
+	(SELECT
+	 AVG(order_value)
+	FROM
+	dbo.supermarket_sales)
 ORDER BY order_value DESC
 ;
 
 ```
 
-#### Example of a multiple column subquery to determine the transaction volume and average, grouped by month and gender
+Example of a **multiple column subquery** to determine the transaction volume and average, grouped by month and gender
 
 ```sql
 
-SELECT month_of_transaction,
+SELECT
+	   month_of_transaction,
 	   gender,
 	   total_transaction_value,
 	   customer_count,
@@ -77,7 +83,8 @@ SELECT month_of_transaction,
 		SUM(amount) AS total_transaction_value,
 		COUNT(transaction_id) AS customer_count,
 		AVG(amount) AS avg_transaction_value
-	FROM dbo.ANZ
+	FROM
+		dbo.ANZ
 	GROUP BY 
 		MONTH(date), 
 		gender
@@ -137,8 +144,9 @@ CustomerHighValueCounts AS (
            first_name,
            COUNT(transaction_id) AS high_value_transaction_count
     FROM
-	HighValueTransactions
-    GROUP BY customer_id, first_name
+	   HighValueTransactions
+    GROUP BY
+	   customer_id, first_name
 )
 SELECT 
        customer_id,
@@ -146,7 +154,8 @@ SELECT
        high_value_transaction_count
 FROM
 	CustomerHighValueCounts
-ORDER BY high_value_transaction_count DESC
+ORDER BY
+	high_value_transaction_count DESC
 ;
 
 ```
@@ -170,9 +179,11 @@ FROM (
 		END AS Defect_rate_bins
 	FROM
 		dbo.supply_chain_data
-) AS BinnedProducts
-GROUP BY Defect_rate_bins
-ORDER BY product_count DESC
+	) AS BinnedProducts
+GROUP BY
+	Defect_rate_bins
+ORDER BY
+	product_count DESC
 ;
 
 ```
@@ -182,9 +193,9 @@ ORDER BY product_count DESC
 ```sql
 
 SELECT 
-    lead_time_grouped,
-    SUM(Number_of_products_sold) AS total_sales_volume,
-    SUM(Revenue_generated) AS total_revenue
+	lead_time_grouped,
+    	SUM(Number_of_products_sold) AS total_sales_volume,
+    	SUM(Revenue_generated) AS total_revenue
 FROM (
     SELECT 
         Lead_time,
@@ -269,10 +280,10 @@ FROM
 	dbo.supply_chain_data AS s1
 WHERE 
 	Defect_rates = (
-		SELECT 
-			MIN(Defect_rates)
-		FROM 
-			dbo.supply_chain_data AS S2
+	SELECT 
+		MIN(Defect_rates)
+	FROM 
+		dbo.supply_chain_data AS S2
 	WHERE 
 		Location IN (
 	SELECT 
