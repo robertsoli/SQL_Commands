@@ -148,5 +148,49 @@ ORDER BY high_value_transaction_count DESC
 
 ```
 
+### Examples of Derived Tables in use for various business tasks
 
+#### Say we wanted to create bins for product defect rates, in order to simplify what would otherwise have to be multiple written queries : 
 
+```sql
+
+SELECT 
+	Defect_rate_bins,
+	COUNT(SKU) AS product_count,
+	AVG(Defect_rates) AS avg_defect_rate
+FROM (
+	SELECT SKU, Defect_rates,
+		CASE
+	 	   WHEN Defect_rates <= 1.5 THEN 'low'
+                   WHEN Defect_rates BETWEEN 1.51 AND 3.0 THEN 'medium'
+		   ELSE 'high'
+		END AS Defect_rate_bins
+	FROM dbo.supply_chain_data
+) AS BinnedProducts
+GROUP BY Defect_rate_bins
+ORDER BY product_count DESC
+;
+
+```
+
+#### Say we wanted to assess the impact of lead times on sales, we could create bins based on lead times as the inner query, and then perform aggregations and groupings in the outer query:
+
+```sql
+
+SELECT 	   lead_time_grouped,
+	   SUM(Number_of_products_sold) AS total_sales_volume,
+	   SUM(Revenue_generated) AS total_revenue
+FROM (
+	   SELECT Lead_time, Number_of_products_sold, Revenue_generated,
+                 CASE 
+                    WHEN Lead_time BETWEEN 0 AND 7 THEN '1 Week'
+                      WHEN Lead_time BETWEEN 7 AND 14 THEN '2 Weeks'
+                         WHEN Lead_time BETWEEN 14 AND 21 THEN '3 Weeks'
+                      WHEN Lead_time BETWEEN 21 AND 28 THEN '4 Weeks'
+                    WHEN Lead_time > 28 THEN '4 Weeks Plus'
+            END AS lead_time_grouped
+         FROM dbo.supply_chain_data) AS sales_by_lead_time
+GROUP BY lead_time_grouped
+;
+
+```
