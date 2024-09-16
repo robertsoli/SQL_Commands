@@ -22,9 +22,9 @@
 
 **Derived Table Subquery** : Returns a result set that can be treated as a table - Two done
 
-**Correlated subqueries** : Reference one or more columns in the outer SQL statement. The subquery is known as a correlated subquery because the subquery is related to the outer SQL statement. - 
+**Correlated subqueries** : Reference one or more columns in the outer SQL statement. The subquery is known as a correlated subquery because the subquery is related to the outer SQL statement. - Two done
 
-**Nested subqueries** : Subqueries that are placed within another subquery.
+**Nested subqueries** : Subqueries that are placed within another subquery. - 
 
 ---
 
@@ -107,8 +107,7 @@ WHERE
 
 ```
 
-#### Example of a multiple row subquery to determine the high value customers(customers whose transaction values are in the top 25% in terms of transaction amount)
-#### and the amount of high value transactions they have made
+#### Example of a multiple row subquery to determine the high value customers(customers whose transaction values are in the top 25% in terms of transaction amount) and the amount of high value transactions they have made
 
 ```sql
 
@@ -255,3 +254,41 @@ ORDER BY
     Shipping_carriers ASC;
 
 ```
+
+### Nested Subqueries
+
+#### Say we wanted to find suppliers with the lowest defect rates in locations with high average production volumes, we could create the following nested subquery
+
+```sql
+
+SELECT 
+	Supplier_name,
+	Location,
+	Defect_rates
+FROM 
+	dbo.supply_chain_data AS s1
+WHERE 
+	Defect_rates = (
+		SELECT 
+			MIN(Defect_rates)
+		FROM 
+			dbo.supply_chain_data AS S2
+	WHERE 
+		Location IN (
+	SELECT 
+		Location
+	FROM 
+		dbo.supply_chain_data AS s3
+	GROUP BY 
+		Location
+	HAVING 
+		AVG(Production_volumes) > 500
+	)
+	AND s2.Supplier_name = s1.Supplier_name
+	)
+ORDER BY Supplier_name,
+		 Location,
+		 Defect_rates ASC;
+
+```
+
