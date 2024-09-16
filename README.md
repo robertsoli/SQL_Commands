@@ -10,8 +10,8 @@ This repo contains various queries with the intention of :
 
 Tools used :
 
-RDMBS : MS SQL Server 20
-Dialect : T-SQL
+- RDMBS : MS SQL Server 20
+- Dialect : T-SQL
 
 Datasets used : insert all DB's and tables here, perhaps do this when you are happy with the overall content
 
