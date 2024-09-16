@@ -3,12 +3,19 @@
 #### A collection of SQL queries
 ---
 
-This repo is to showcase various SQL commands for reference when applying for jobs.
+This repo contains various queries with the intention of : 
+
+ - Showcasing SQL knowledge, varying from basic queries to more advanced topics
+ - Being a record of my learning path for personal use
 
 Tools used :
 
-MS SQL Server 20
-T-SQL
+RDMBS : MS SQL Server 20
+Dialect : T-SQL
+
+Datasets used : insert all DB's and tables here, perhaps do this when you are happy with the overall content
+
+
 
 ---
 
