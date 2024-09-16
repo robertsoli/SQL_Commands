@@ -177,20 +177,25 @@ ORDER BY product_count DESC
 
 ```sql
 
-SELECT 	   lead_time_grouped,
-	   SUM(Number_of_products_sold) AS total_sales_volume,
-	   SUM(Revenue_generated) AS total_revenue
+SELECT 
+    lead_time_grouped,
+    SUM(Number_of_products_sold) AS total_sales_volume,
+    SUM(Revenue_generated) AS total_revenue
 FROM (
-	   SELECT Lead_time, Number_of_products_sold, Revenue_generated,
-                 CASE 
-                    WHEN Lead_time BETWEEN 0 AND 7 THEN '1 Week'
-                      WHEN Lead_time BETWEEN 7 AND 14 THEN '2 Weeks'
-                         WHEN Lead_time BETWEEN 14 AND 21 THEN '3 Weeks'
-                      WHEN Lead_time BETWEEN 21 AND 28 THEN '4 Weeks'
-                    WHEN Lead_time > 28 THEN '4 Weeks Plus'
-            END AS lead_time_grouped
-         FROM dbo.supply_chain_data) AS sales_by_lead_time
-GROUP BY lead_time_grouped
-;
+    SELECT 
+        Lead_time,
+        Number_of_products_sold,
+        Revenue_generated,
+        CASE 
+            WHEN Lead_time BETWEEN 0 AND 7 THEN '1 Week'
+            WHEN Lead_time BETWEEN 7 AND 14 THEN '2 Weeks'
+            WHEN Lead_time BETWEEN 14 AND 21 THEN '3 Weeks'
+            WHEN Lead_time BETWEEN 21 AND 28 THEN '4 Weeks'
+            WHEN Lead_time > 28 THEN '4 Weeks Plus'
+        END AS lead_time_grouped
+    FROM dbo.supply_chain_data
+) AS sales_by_lead_time
+GROUP BY 
+    lead_time_grouped;
 
 ```
