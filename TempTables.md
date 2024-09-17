@@ -92,4 +92,69 @@ GROUP BY
 
 ```
 
+Moving onto another example, say we wanted to avoid repeated queries by creating the necessary joins at the start of a session by using a temporary table :
 
+```sql
+
+DROP TABLE IF EXISTS #SupplierTransactionsYearly
+
+CREATE TABLE #SupplierTransactionsYearly (
+	district NVARCHAR(50),
+	supplier NVARCHAR(50),
+	total_order_volume INT,
+	total_order_value DECIMAL(18,2),
+	year_record INT
+)
+;
+
+INSERT INTO #SupplierTransactionsYearly
+(district, supplier, total_order_volume, total_order_value, year_record)
+
+SELECT 
+	sd.district,
+	id.supplier,
+	SUM(f.quantity) AS total_order_volume,
+	SUM(f.total_price) AS total_order_value,
+	t.year_record
+FROM 
+	dbo.fact_table AS f
+JOIN 
+	dbo.time_dim AS t
+ON	f.time_key = t.time_key
+JOIN 
+    	dbo.store_dim AS sd
+ON  	f.store_key = sd.store_key
+JOIN 
+	dbo.item_dim AS id
+ON 
+	f.item_key = id.item_key
+WHERE 
+	t.year_record BETWEEN 2014 AND 2020
+GROUP BY 
+	sd.district, id.supplier, t.year_record
+ORDER BY 
+	sd.district, t.year_record
+;
+
+```
+
+Now that we have the temporary table, we could query for some useful insights in a more efficient manner.
+
+Say we wanted to see how sales and order volume have performed over time by district, we could write a query using the temporary table that has been created without needing to add joins:
+
+```sql
+
+SELECT 
+	district,
+	year_record,
+	SUM(total_order_value) AS district_sales,
+	SUM(total_order_volume) AS district_order_volume
+FROM 
+	#SupplierTransactionsYearly
+GROUP BY 
+	district, year_record
+ORDER BY 
+	district ASC, year_record ASC
+;
+
+```
