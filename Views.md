@@ -53,4 +53,43 @@ ON ta.title_id = t.title_id
 
 ```
 
-#### 
+For the examples below we will be using the AdventureWorks dataset from Microsoft due to its size and schema. The goal is to create some views that would be useful by having clean and ready data on hand for department specific reporting.
+
+The tables we will be using in order: 
+
+Sales - list them here as you go
+Name table
+
+Some specific business tasks: 
+
+Include back ordered invoices 
+
+---
+
+View for Monthly Sales Summary
+
+Table Sales.CustomerTransactions for the following columns:
+
+ConfirmedDeliveryTime to extract and group by week and month and year if needed 
+SalespersonPersonId to determine sales volume and performance per sales person
+Quantity for unit volume
+COUNT DISTINCT InvoiceID for number of orders
+TaxAmount for tax total
+LineProfit for Profit total
+ExtendedPrice for total sales
+CustomerCategories.CustomerCategoryName for which type of client, ie wholesale, agent, novelty shop, etc (group data by these groups as well for the report) JOINED ON 
+Customers.CustomerCategoryID in both tables
+
+
+
+Joined with 
+
+Application.People on PersonID (IsSalesPerson column to filter out these individuals)
+Reason is to get their name for use in the sales report view
+
+
+```sql
+
+
+
+```
