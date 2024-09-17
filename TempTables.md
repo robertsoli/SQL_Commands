@@ -8,9 +8,9 @@ A temporary table is a base table that exists only for the duration of a specifi
 
 ### Some reasons to use temporary tables
 
-- **Simplifying Complex Queries:** Breaking down complex queries into more manageable parts.
-- **Improving Performance:** Avoiding repeated calculations by storing intermediate results.
-- **Isolating Data for Testing:** Debugging and validating parts of your queries.
+- **Simplifying Complex Queries:** Breaking down complex queries into more manageable parts. - One done
+- **Improving Performance:** Avoiding repeated calculations by storing intermediate results. - One done
+- **Isolating Data for Testing:** Debugging and validating parts of your queries. - 
 - **Storing Results for Subsequent Operations:** Facilitating further analysis and operations.
 - **Facilitating ETL Processes:** Managing intermediate stages in data transformation.
 - **Handling Large Data Sets:** Processing data in manageable chunks.
@@ -157,3 +157,4 @@ ORDER BY
 ;
 
 ```
+
