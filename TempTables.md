@@ -23,13 +23,7 @@ Say we wanted to do some calculations to determine profit margin, or average shi
 
 ```sql
 
--- Dropping the table if it exists, always good practice
-
-DROP TABLE IF EXISTS #SupplierTransactions
-
-```
-
-```sql
+DROP TABLE IF EXISTS #SupplierTransactions -- Dropping the table if it exists, always good practice
 
 -- Creating the temporary table
 
@@ -49,15 +43,19 @@ CREATE TABLE #SupplierTransactions
 
 -- Inserting values into #SupplierTransactions
 
-INSERT INTO #SupplierTransactions (supplier_name, total_shipping_costs, total_manufacturing_costs, total_revenue, total_order_quantities)
+INSERT INTO #SupplierTransactions
+(supplier_name, total_shipping_costs, total_manufacturing_costs, total_revenue, total_order_quantities)
+
 SELECT 
 	supplier_name,
 	SUM(order_quantities * shipping_costs) AS total_shipping_costs,
 	SUM(order_quantities * manufacturing_costs) AS total_manufacturing_costs,
 	SUM(total_revenue) AS total_revenue,
 	SUM(order_quantities) AS total_order_quantities
-FROM dbo.supply_chain_data
-GROUP BY supplier_name
+FROM
+	dbo.supply_chain_data
+GROUP BY
+	supplier_name
 ;
 
 ```
@@ -71,9 +69,10 @@ SELECT
 	total_shipping_costs,
 	total_manufacturing_costs,
 	total_revenue,
-(total_revenue - (total_shipping_costs + total_manufacturing_costs)) AS total_profit,
-ROUND((total_revenue - (total_shipping_costs + total_manufacturing_costs)) / total_revenue * 100,2) AS profit_margin
-FROM #SupplierTransactions
+	(total_revenue - (total_shipping_costs + total_manufacturing_costs)) AS total_profit,
+	ROUND((total_revenue - (total_shipping_costs + total_manufacturing_costs)) / total_revenue * 100,2) AS profit_margin
+FROM
+	#SupplierTransactions
 ;
 
 ```
