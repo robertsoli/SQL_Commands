@@ -17,13 +17,22 @@ A temporary table is a base table that exists only for the duration of a specifi
 
 ---
 
-### Examples of Temporary Tables in use
+### Examples of Temporary Tables in use when simplifying queries
 
 Say we wanted to do some calculations to determine profit margin, or average shipping cost per order, we could create a temporary table containing the aggregated data to simplify the querying process:
 
 ```sql
 
--- Create the temporary table
+-- Dropping the table if it exists, always good practice
+
+DROP TABLE IF EXISTS #SupplierTransactions
+
+```
+
+```sql
+
+-- Creating the temporary table
+
 CREATE TABLE #SupplierTransactions
 (
 	supplier_name VARCHAR(50),
@@ -34,7 +43,11 @@ CREATE TABLE #SupplierTransactions
 )
 ;
 
--- Insert values into #SupplierTransactions
+```
+
+```sql
+
+-- Inserting values into #SupplierTransactions
 
 INSERT INTO #SupplierTransactions (supplier_name, total_shipping_costs, total_manufacturing_costs, total_revenue, total_order_quantities)
 SELECT 
@@ -62,6 +75,7 @@ SELECT
 ROUND((total_revenue - (total_shipping_costs + total_manufacturing_costs)) / total_revenue * 100,2) AS profit_margin
 FROM #SupplierTransactions
 ;
+
 ```
 
 Then lets look at what the average shipping cost per unit is by supplier, again using the temporary table to reduce the complexity of the query we are writing:
