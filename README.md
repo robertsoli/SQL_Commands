@@ -3,10 +3,10 @@
 #### A collection of SQL queries
 ---
 
-This repo contains various queries with the intention of : 
+This repo contains various queries and procedures with the intention of : 
 
  - Showcasing SQL knowledge, varying from basic queries to more advanced topics
- - Being a record of my learning path for personal use
+ - Being a personal record of my learning path
 
 Tools used :
 
