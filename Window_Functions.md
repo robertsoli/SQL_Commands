@@ -5,25 +5,25 @@ Some business tasks to show window functions in use:
 ```sql
 
 SELECT 
-    ap.FullName,
-	  MONTH(i.ConfirmedDeliveryTime) AS month,
-	  YEAR(i.ConfirmedDeliveryTime) AS year,
-    SUM(il.ExtendedPrice) AS total_sales,
-    SUM(il.LineProfit) AS total_profit,
-    SUM(il.ExtendedPrice) - LAG(SUM(il.ExtendedPrice)) OVER (PARTITION BY ap.FullName ORDER BY YEAR(i.ConfirmedDeliveryTime)) AS YoYGrowth,
-	  SUM(il.ExtendedPrice) - LAG(SUM(il.ExtendedPrice)) OVER (PARTITION BY ap.FullName ORDER BY MONTH(i.ConfirmedDeliveryTime)) AS MoMGrowth
+    	ap.FullName,
+	MONTH(i.ConfirmedDeliveryTime) AS month,
+	YEAR(i.ConfirmedDeliveryTime) AS year,
+    	SUM(il.ExtendedPrice) AS total_sales,
+    	SUM(il.LineProfit) AS total_profit,
+    	SUM(il.ExtendedPrice) - LAG(SUM(il.ExtendedPrice)) OVER (PARTITION BY ap.FullName ORDER BY YEAR(i.ConfirmedDeliveryTime)) AS YoYGrowth,
+	SUM(il.ExtendedPrice) - LAG(SUM(il.ExtendedPrice)) OVER (PARTITION BY ap.FullName ORDER BY MONTH(i.ConfirmedDeliveryTime)) AS MoMGrowth
 FROM 
-    Sales.InvoiceLines AS il
+    	Sales.InvoiceLines AS il
 JOIN 
-    Sales.Invoices AS i ON i.InvoiceID = il.InvoiceID
+    	Sales.Invoices AS i ON i.InvoiceID = il.InvoiceID
 JOIN 
-    Application.People AS ap ON i.SalespersonPersonID = ap.PersonID
+    	Application.People AS ap ON i.SalespersonPersonID = ap.PersonID
 WHERE
-    i.ConfirmedDeliveryTime IS NOT NULL
+    	i.ConfirmedDeliveryTime IS NOT NULL
 GROUP BY 
-    ap.FullName, YEAR(i.ConfirmedDeliveryTime), MONTH(i.ConfirmedDeliveryTime)
+    	ap.FullName, YEAR(i.ConfirmedDeliveryTime), MONTH(i.ConfirmedDeliveryTime)
 ORDER BY 
-    ap.FullName, month, year;
+    	ap.FullName, month, year;
 ;
 
 ```
@@ -43,16 +43,16 @@ SELECT
 	COUNT(DISTINCT i.InvoiceID) AS invoice_count,
 	AVG(il.ExtendedPrice) AS avg_sale_per_invoice
 FROM
-  sales.Invoices AS i
-JOIN sales.InvoiceLines AS il
-ON il.InvoiceID = i.InvoiceID
+  	sales.Invoices AS i
+JOIN 	sales.InvoiceLines AS il
+ON 	il.InvoiceID = i.InvoiceID
 WHERE
-    YEAR(i.ConfirmedDeliveryTime) = 2016
-AND i.ConfirmedDeliveryTime IS NOT NULL 
+    	YEAR(i.ConfirmedDeliveryTime) = 2016
+AND 	i.ConfirmedDeliveryTime IS NOT NULL 
 GROUP BY 
-    YEAR(i.ConfirmedDeliveryTime),
-    MONTH(i.ConfirmedDeliveryTime),
-    DAY(i.ConfirmedDeliveryTime)
+    	YEAR(i.ConfirmedDeliveryTime),
+    	MONTH(i.ConfirmedDeliveryTime),
+    	DAY(i.ConfirmedDeliveryTime)
 )
 
 SELECT 
@@ -64,7 +64,7 @@ SELECT
 	invoice_count,
 	total_sales / NULLIF(invoice_count, 0) AS avg_sale_per_invoice
 FROM
-  DailySales
+  	DailySales
 ORDER BY
 	year,
 	month,
@@ -73,9 +73,8 @@ ORDER BY
 
 ```
 
-Next up lets create a query to rank product performance by monthly sales and units sold, using the RANK function.
-
-
+Next up lets create a query to rank product performance by monthly sales and units sold, using the RANK function. 
+We are also using the OVER() PARTITION BY function to create smaller manageable subsets of the data, in this case by month, which allows for independant calculations within each segment.
 
 ```sql
 
@@ -114,13 +113,6 @@ ORDER BY
 ;
 
 ```
-
-
-#### OVER
-
-#### OVER with PARTITION BY
-
-#### RANK
 
 #### DENSERANK
 
