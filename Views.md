@@ -44,11 +44,16 @@ SELECT
      t.price,
      t.ytd_sales,
      ta.title_id
-FROM dbo.authors AS a
-INNER JOIN dbo.titleauthor AS ta
-ON ta.au_id = a.au_id
-INNER JOIN dbo.titles AS t
-ON ta.title_id = t.title_id
+FROM
+	dbo.authors AS a
+INNER JOIN
+	dbo.titleauthor AS ta
+ON
+	ta.au_id = a.au_id
+INNER JOIN
+	dbo.titles AS t
+ON
+	ta.title_id = t.title_id
 ;
 
 ```
@@ -95,17 +100,23 @@ SELECT
 	SUM(il.ExtendedPrice) AS total_sales,
 	SUM(il.TaxAmount) AS total_tax,
 	SUM(il.LineProfit) AS total_profit
-FROM Sales.Invoices AS i
-JOIN Sales.InvoiceLines AS il
-ON i.InvoiceID = il.InvoiceID
-JOIN Application.People AS a
-ON a.PersonID = i.SalespersonPersonID
-WHERE a.IsSalesperson = 1
+FROM
+	Sales.Invoices AS i
+JOIN
+	Sales.InvoiceLines AS il
+ON
+	i.InvoiceID = il.InvoiceID
+JOIN
+	Application.People AS a
+ON
+	a.PersonID = i.SalespersonPersonID
+WHERE
+	a.IsSalesperson = 1
 AND YEAR(i.ConfirmedDeliveryTime) = 2016
 AND MONTH(i.ConfirmedDeliveryTime) = 5
 AND i.ConfirmedDeliveryTime IS NOT NULL
 GROUP BY YEAR(i.ConfirmedDeliveryTime),
-		 MONTH(i.ConfirmedDeliveryTime),
+         MONTH(i.ConfirmedDeliveryTime),
 		 a.FullName
 ;
 
