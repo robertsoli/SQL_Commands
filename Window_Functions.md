@@ -30,6 +30,8 @@ ORDER BY
 
 The OVER function is also useful for calculating running totals, so lets do so for the most recent years sales 
 
+In this query, the SUM(total_sales) OVER (ORDER BY year, month, day) computes a running total of sales. This function iteratively adds the total_sales for each row in the specified order (by date), providing a cumulative figure that reflects the total sales from the start of the data set up to that day.
+
 ```sql
 
 WITH DailySales AS (
@@ -67,6 +69,48 @@ ORDER BY
 	year,
 	month,
 	day
+;
+
+```
+
+Next up lets create a query to rank product performance by monthly sales and units sold, using the RANK function.
+
+
+
+```sql
+
+WITH MonthlyProductSales2016 AS (
+SELECT
+	il.StockItemID,
+	il.Description,
+	MONTH(i.ConfirmedDeliveryTime) AS month,
+	SUM(il.ExtendedPrice) AS total_sales,
+	SUM(il.Quantity) AS total_units
+FROM 
+	sales.Invoices AS i
+JOIN
+	sales.InvoiceLines AS il
+ON
+	i.InvoiceID = il.InvoiceID
+WHERE 
+	YEAR(i.ConfirmedDeliveryTime) = 2016
+GROUP BY 
+	il.StockItemID,
+	MONTH(i.ConfirmedDeliveryTime),
+	il.Description
+)
+
+SELECT 
+	StockItemID,
+	Description,
+	month,
+	total_sales,
+	total_units,
+	RANK() OVER(PARTITION BY month ORDER BY total_sales DESC) AS sales_ranking
+FROM
+	MonthlyProductSales2016
+ORDER BY
+	month, sales_ranking
 ;
 
 ```
