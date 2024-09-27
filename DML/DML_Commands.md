@@ -100,9 +100,11 @@ SELECT
 	f.unit,
 	f.unit_price,
 	f.total_price
-FROM dbo.fact_table AS f
-INNER JOIN dbo.item_dim AS i
-ON f.item_key=i.item_key
+FROM
+	dbo.fact_table AS f
+INNER JOIN
+	dbo.item_dim AS i
+	ON f.item_key=i.item_key
 ;
 
 ```
@@ -124,11 +126,16 @@ SELECT
 	f.total_price,
 	t.trans_type,
 	t.bank_name
-FROM ((dbo.fact_table AS f
-INNER JOIN dbo.item_dim AS i
-ON f.item_key=i.item_key)
-INNER JOIN dbo.Trans_dim AS t
-ON f.payment_key=t.payment_key);
+FROM
+	((dbo.fact_table AS f
+INNER JOIN
+	dbo.item_dim AS i
+ON
+	f.item_key=i.item_key)
+INNER JOIN
+	dbo.Trans_dim AS t
+ON f.payment_key=t.payment_key)
+;
 
 ```
 
@@ -137,17 +144,20 @@ LEFT JOIN to print all records from the 'customer_dim' table with matching recor
 ```sql
 
 SELECT 
-c.customer_key,
-c.customer_name,
-c.contact_no,
-c.nid,
-f.quantity,
-f.unit,
-f.unit_price,
-f.total_price
-FROM dbo.customer_dim AS c
-LEFT JOIN dbo.fact_table AS f
-ON c.customer_key=f.customer_key
+	c.customer_key,
+	c.customer_name,
+	c.contact_no,
+	c.nid,
+	f.quantity,
+	f.unit,
+	f.unit_price,
+	f.total_price
+FROM
+	dbo.customer_dim AS c
+LEFT JOIN
+	dbo.fact_table AS f
+ON
+	c.customer_key=f.customer_key
 ;
 
 ```
@@ -157,22 +167,26 @@ RIGHT JOIN to print all records from the 'time_dim' table with matching records 
 ```sql
 
 SELECT
-t.time_key,
-t.date_record,
-t.hour_record,
-t.day_record,
-t.week_record,
-t.month_record,
-t.quarter_record,
-t.year_record,
-f.quantity,
-f.unit,
-f.unit_price,
-f.total_price
-FROM dbo.fact_table AS f
-RIGHT JOIN dbo.time_dim AS t
-ON f.time_key=t.time_key
-ORDER BY date_record
+	t.time_key,
+	t.date_record,
+	t.hour_record,
+	t.day_record,
+	t.week_record,
+	t.month_record,
+	t.quarter_record,
+	t.year_record,
+	f.quantity,
+	f.unit,
+	f.unit_price,
+	f.total_price
+FROM
+	dbo.fact_table AS f
+RIGHT JOIN
+	dbo.time_dim AS t
+ON
+	f.time_key=t.time_key
+ORDER BY
+	date_record
 
 ```
 
@@ -182,16 +196,21 @@ SELF JOIN to determine if there are any duplicate values in the table
 ```sql
 
 SELECT
-tr.payment_key,
-tr.trans_type,
-tr.bank_name,
-t.payment_key,
-t.trans_type,
-t.bank_name
-FROM dbo.Trans_dim AS tr
-JOIN dbo.Trans_dim AS t
-ON tr.payment_key=t.payment_key
-AND tr.payment_key<>t.payment_key
+	tr.payment_key,
+	tr.trans_type,
+	tr.bank_name,
+	t.payment_key,
+	t.trans_type,
+	t.bank_name
+FROM
+	dbo.Trans_dim AS tr
+JOIN
+	dbo.Trans_dim AS t
+ON
+	tr.payment_key=t.payment_key
+AND
+	tr.payment_key<>t.payment_key
+;
 
 ```
 
@@ -200,30 +219,37 @@ SELF JOIN to compare values in the same table
 ```sql
 
 SELECT
-tr.payment_key,
-tr.trans_type,
-tr.bank_name,
-t.payment_key,
-t.trans_type,
-t.bank_name
-FROM dbo.Trans_dim AS tr
-JOIN dbo.Trans_dim AS t
-ON tr.payment_key=t.payment_key
+	tr.payment_key,
+	tr.trans_type,
+	tr.bank_name,
+	t.payment_key,
+	t.trans_type,
+	t.bank_name
+FROM
+	dbo.Trans_dim AS tr
+JOIN
+	dbo.Trans_dim AS t
+ON
+	tr.payment_key=t.payment_key
+;
 
 ```
 
 CROSS JOIN to create a cartesian table, which is not useful in this scenario but is useful when wanting to populate a table with combinations of data from two tables
 
 ```sql
+
 SELECT 
-customer_name,
-contact_no,
-nid,
-division,
-district,
-upazila
-FROM dbo.customer_dim
-CROSS JOIN store_dim
+	customer_name,
+	contact_no,
+	nid,
+	division,
+	district,
+	upazila
+FROM
+	dbo.customer_dim
+CROSS JOIN
+	store_dim
 ;
 
 ```
