@@ -114,6 +114,80 @@ ORDER BY
 
 ```
 
-#### DENSERANK
+For another example of where RANK can be used, say we wanted to rank our customers by their total transactional value, we could use the following query
 
+```sql
 
+WITH CustomerSalesRanked AS (
+
+SELECT 
+	c.CustomerName,
+	i.CustomerID,
+	COUNT(i.InvoiceID) AS orders_placed,
+	SUM(il.ExtendedPrice) AS total_order_value
+FROM
+	Sales.Customers AS c
+JOIN
+	Sales.Invoices AS i
+ON
+	c.CustomerID = i.CustomerID
+JOIN
+	Sales.InvoiceLines AS il
+ON
+	i.InvoiceID = il.InvoiceID
+GROUP BY
+	c.CustomerName, i.CustomerID
+)
+
+SELECT 
+	CustomerName,
+	CustomerID,
+	orders_placed,
+	total_order_value,
+	RANK() OVER (ORDER BY total_order_value DESC) AS sales_rank
+FROM
+	CustomerSalesRanked
+ORDER BY
+	sales_rank
+;
+
+```
+
+To ensure there are no gaps in the rankings, we could use DENSE_RANK we can rank customers based on their total order volumes
+
+```sql
+
+WITH CustomerQuantitiesRanked AS (
+
+SELECT 
+	c.CustomerName,
+	i.CustomerID,
+	COUNT(i.InvoiceID) AS orders_placed,
+	SUM(il.ExtendedPrice) AS total_order_value
+FROM
+	Sales.Customers AS c
+JOIN
+	Sales.Invoices AS i
+ON
+	c.CustomerID = i.CustomerID
+JOIN
+	Sales.InvoiceLines AS il
+ON
+	i.InvoiceID = il.InvoiceID
+GROUP BY
+	c.CustomerName, i.CustomerID
+)
+
+SELECT 
+	CustomerName,
+	CustomerID,
+	orders_placed,
+	total_order_value,
+	DENSE_RANK() OVER (ORDER BY orders_placed DESC) AS quantity_rank
+FROM
+	CustomerQuantitiesRanked
+ORDER BY
+	quantity_rank
+;
+
+```
